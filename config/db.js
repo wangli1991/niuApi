@@ -2,7 +2,7 @@
  * @Author: wangli
  * @Date: 2020-05-19 09:05:36
  * @Last Modified by: wangli
- * @Last Modified time: 2020-06-28 16:15:20
+ * @Last Modified time: 2020-07-03 21:57:56
  */
 
 const env = process.env.NODE_ENV; // 环境参数
@@ -12,7 +12,7 @@ let REDIS_CONF;
 if (env === "dev") {
   // mysql 配置
   MYSQL_CONF = {
-    host: "localhost",
+    host: "39.106.219.221",
     user: "root",
     password: "root",
     database: "niu",
