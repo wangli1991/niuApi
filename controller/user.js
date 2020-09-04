@@ -65,7 +65,7 @@ const userPerfect = (
   family_address,
   work_area,
   work_address,
-  user_property,
+  owner_property,
   area_manage,
   manage_area_info,
   leader_name,
@@ -128,7 +128,7 @@ const userPerfect = (
           userNo = "D" + userNo + userIdNo;
           break;
       }
-      let updataSql = `update tbl_users set userno='${userNo}',province_id='${province_id}',city_id='${city_id}',ara_id='${ara_id}',street_id='${street_id}',owner_area='${owner_area}',owner_address='${owner_address}',present_area='${present_area}',present_address='${present_address}',manage_area='${manage_area}',manage_address='${manage_address}',family_area='${family_area}',family_address='${family_address}',work_area='${work_area}',work_address='${work_address}',user_property='${user_property}',area_manage='${area_manage}',manage_area_info='${manage_area_info}',leader_name='${leader_name}',breed_range='${breed_range}',member_count='${member_count}',breed_facilities='${breed_facilities}',breed_variety='${breed_variety}',technical_level='${technical_level}',credit_grade='${credit_grade}',contact_tel='${contact_tel}',owner_info='${owner_info}',education='${education}',age='${age}',nation='${nation}',occupation='${occupation}',job_property='${job_property}',technical_grade='${technical_grade}',health_status='${health_status}',id_number='${id_number}',is_perfect=1 where uid='${uid}'`;
+      let updataSql = `update tbl_users set userno='${userNo}',province_id='${province_id}',city_id='${city_id}',ara_id='${ara_id}',street_id='${street_id}',owner_area='${owner_area}',owner_address='${owner_address}',present_area='${present_area}',present_address='${present_address}',manage_area='${manage_area}',manage_address='${manage_address}',family_area='${family_area}',family_address='${family_address}',work_area='${work_area}',work_address='${work_address}',owner_property='${owner_property}',area_manage='${area_manage}',manage_area_info='${manage_area_info}',leader_name='${leader_name}',breed_range='${breed_range}',member_count='${member_count}',breed_facilities='${breed_facilities}',breed_variety='${breed_variety}',technical_level='${technical_level}',credit_grade='${credit_grade}',contact_tel='${contact_tel}',owner_info='${owner_info}',education='${education}',age='${age}',nation='${nation}',occupation='${occupation}',job_property='${job_property}',technical_grade='${technical_grade}',health_status='${health_status}',id_number='${id_number}',is_perfect=1 where uid='${uid}'`;
       return exec(updataSql).then((updataData) => {
         if (updataData) {
           return exec(sql).then((data) => {

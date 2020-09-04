@@ -31,7 +31,14 @@ class ErrorModel extends BaseModel {
     this.status = "E";
   }
 }
+class TokenModel extends BaseModel {
+  constructor(data, msg) {
+    super(data, msg);
+    this.status = "U";
+  }
+}
 module.exports = {
   SuccessModel,
   ErrorModel,
+  TokenModel
 };

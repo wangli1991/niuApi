@@ -48,6 +48,10 @@ router.post("/niuAdd", function (req, res, next) {
     out_weight_expect,
     calf_feeding_mode,
     cow_feeding_mode,
+    poi_address,
+    poi_name,
+    poi_longitude,
+    poi_latitude,
   } = req.body;
   const result = niuAdd(
     masterid,
@@ -85,7 +89,11 @@ router.post("/niuAdd", function (req, res, next) {
     daily_gain_expect,
     out_weight_expect,
     calf_feeding_mode,
-    cow_feeding_mode
+    cow_feeding_mode,
+    poi_address,
+    poi_name,
+    poi_longitude,
+    poi_latitude
   );
   return result.then((data) => {
     if (data) {
@@ -97,26 +105,96 @@ router.post("/niuAdd", function (req, res, next) {
 });
 //转品种
 router.post("/niuChange", function (req, res, next) {
-  const { id, category, date, weight, health_evaluation } = req.body;
-  const result = niuChange(id, category, date, weight, health_evaluation);
+  const {
+    niu_id,
+    type,
+    type_id,
+    type_code,
+    name,
+    category,
+    old_category,
+    date,
+    weight,
+    increase_weight,
+    health_evaluation,
+    house,
+    bullno,
+    animal_breeder,
+    childbirth_date,
+    pregnancy_days,
+    vaccines_name,
+    inoculation,
+    vaccines_dose,
+    vaccine_factory,
+    vaccine_batch,
+    quarantine,
+    disease_type,
+    concurrent_symptom,
+    disease_reason,
+    treatment_plan,
+    veterinary_name,
+    treatment_result,
+    description,
+    poi_address,
+    poi_name,
+    poi_longitude,
+    poi_latitude,
+  } = req.body;
+  const result = niuChange(
+    niu_id,
+    type,
+    type_id,
+    type_code,
+    name,
+    category,
+    old_category,
+    date,
+    weight,
+    increase_weight,
+    health_evaluation,
+    house,
+    bullno,
+    animal_breeder,
+    childbirth_date,
+    pregnancy_days,
+    vaccines_name,
+    inoculation,
+    vaccines_dose,
+    vaccine_factory,
+    vaccine_batch,
+    quarantine,
+    disease_type,
+    concurrent_symptom,
+    disease_reason,
+    treatment_plan,
+    veterinary_name,
+    treatment_result,
+    description,
+    poi_address,
+    poi_name,
+    poi_longitude,
+    poi_latitude
+  );
   return result.then((data) => {
     if (data) {
-      res.json(new SuccessModel("转品种成功"));
+      res.json(new SuccessModel("操作成功"));
     } else {
-      res.json(new ErrorModel("转品种失败"));
+      res.json(new ErrorModel("操作失败"));
     }
   });
 });
 //获取分类
 router.get("/getCategoryList", function (req, res, next) {
-  const result = getCategoryList();
+  const { category } = req.query;
+  const result = getCategoryList(category);
   return result.then((listData) => {
     res.json(new SuccessModel(listData));
   });
 });
 //根据分类id获取分类
 router.get("/getCategory", function (req, res, next) {
-  const { id } = req.body;
+  const { id } = req.query;
+  console.log(id);
   const result = getCategory(id);
   return result.then((data) => {
     res.json(new SuccessModel(data));
