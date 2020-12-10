@@ -1,8 +1,8 @@
 /*
  * @Author: wangli
  * @Date: 2020-07-02 19:47:14
- * @LastEditors: wangli
- * @LastEditTime: 2020-07-23 06:47:33
+ * @LastEditors: 王利
+ * @LastEditTime: 2020-10-30 19:43:04
  */
 
 /**
@@ -57,21 +57,4 @@ function endUnix(date) {
     Date.parse(date.replace(/-/g, "/")) + 24 * 60 * 60 * 1000 - 1000
   );
 }
-/**
- * token解析函数
- * @param {type}
- * @return: {Boolen}           格式化的时间字符串
- */
-const jwt = require("jsonwebtoken");
-const { PRIVATE_KEY } = require("./constant");
-function decodeToken(req) {
-  const authorization = req.get("Authorization");
-  let token = "";
-  if (authorization.indexOf("Bearer") >= 0) {
-    token = authorization.replace("Bearer ", "");
-  } else {
-    token = authorization;
-  }
-  return jwt.verify(token, PRIVATE_KEY);
-}
-module.exports = { formatTime, startUnix, endUnix, decodeToken };
+module.exports = { formatTime, startUnix, endUnix };

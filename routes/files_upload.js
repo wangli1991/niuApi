@@ -39,7 +39,8 @@ router.post("/imgUpload", upload.single("file"), function (req, res, next) {
         for (var i in networkInterfaces) {
           saveUrl = networkInterfaces[i];
         }
-        const imgPath = `http://${saveUrl[1].address}:8888/temp/images/${imgName}`;
+        // const imgPath = `http://${saveUrl[1].address}:8888/temp/images/${imgName}`;
+        const imgPath = `/temp/images/${imgName}`;
         const result = imgUpload(imgPath, fileName);
         return result.then((resData) => {
           if (resData) {

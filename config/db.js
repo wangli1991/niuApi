@@ -15,7 +15,7 @@ if (env === "dev") {
     host: "localhost",
     user: "root",
     password: "root",
-    database: "niu",
+    database: "devsql",
     port: 3306,
   };
   // redis 配置
@@ -31,7 +31,7 @@ if (env === "production") {
     host: "localhost",
     user: "root",
     password: "root",
-    database: "niu",
+    database: "devsql",
     port: 3306,
   };
   // redis 配置

@@ -1,0 +1,4 @@
+[logger] GET /user/getUserInfo?_t=1606203396419 401 13 - 28.770 ms
+[logger] POST /user/login?_t=1606203398764 200 1218 - 1068.672 ms
+[logger] GET /user/getUserInfo?_t=1606203399853 200 1023 - 47.730 ms
+[logger] GET /vue-element-admin/transaction/list?_t=1606203400225 404 173 - 1.591 ms

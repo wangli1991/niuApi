@@ -5,12 +5,13 @@
  * @Last Modified time: 2020-06-13 22:20:08
  */
 class BaseModel {
-  constructor(data, msg) {
+  constructor(data, msg, code = 200) {
     if (typeof data === "string") {
       this.msg = data;
-      data = null;
-      msg = null;
+      return;
     }
+    this.msg = null;
+    this.data = [];
     if (data) {
       this.data = data;
     }
@@ -20,25 +21,22 @@ class BaseModel {
   }
 }
 class SuccessModel extends BaseModel {
-  constructor(data, msg) {
-    super(data, msg);
+  constructor(data, msg, code) {
+    super(data, msg, code);
     this.status = "S";
+    this.ok = true;
+    this.code = 200;
   }
 }
 class ErrorModel extends BaseModel {
-  constructor(data, msg) {
-    super(data, msg);
+  constructor(data, msg, code) {
+    super(data, msg, code);
     this.status = "E";
-  }
-}
-class TokenModel extends BaseModel {
-  constructor(data, msg) {
-    super(data, msg);
-    this.status = "U";
+    this.ok = false;
+    this.code = code;
   }
 }
 module.exports = {
   SuccessModel,
   ErrorModel,
-  TokenModel
 };
