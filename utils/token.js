@@ -4,8 +4,8 @@ const { config } = require("./jwt");
 /*
  * @Author: 王利
  * @Date: 2020-11-02 09:39:38
- * @LastEditors: 王利
- * @LastEditTime: 2020-11-02 09:43:52
+ * @LastEditors: WangLi
+ * @LastEditTime: 2021-04-17 17:34:57
  */
 /**
  * 创建token函数

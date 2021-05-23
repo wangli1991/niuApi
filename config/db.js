@@ -15,13 +15,13 @@ if (env === "dev") {
     host: "localhost",
     user: "root",
     password: "root",
-    database: "devsql",
+    database: "daxuesheng",
     port: 3306,
   };
   // redis 配置
   REDIS_CONF = {
-    port: 6379,
     host: "localhost",
+    port: 6379,
   };
 }
 
@@ -31,13 +31,13 @@ if (env === "production") {
     host: "localhost",
     user: "root",
     password: "root",
-    database: "devsql",
+    database: "daxuesheng",
     port: 3306,
   };
   // redis 配置
   REDIS_CONF = {
-    port: 6379,
     host: "localhost",
+    port: 6379,
   };
 }
 

@@ -122,7 +122,7 @@ const dictUpdate = (childAdd, childDel, childUpdate, main, userId) => {
       let execLen = 1;
       //主表更新
       let updataSql = `update tbl_sys_dictionary set dictname='${main.dictname}',update_time='${nowTime}',update_user='${userId}' where id=${main.id}`;
-      let promisExec = [exec(updataSql)];
+      let promiseExec = [exec(updataSql)];
       //子表更新
       if (childUpdate.length) {
         execLen += childUpdate.length;
@@ -134,7 +134,7 @@ const dictUpdate = (childAdd, childDel, childUpdate, main, userId) => {
           }
           childUpdateSql = `update tbl_sys_subdictionary set dictchild='${item.dictchild}',dictchildname='${item.dictchildname}',sort='${item.sort}',stop='${item.stop}',update_time='${nowTime}',update_user='${userId}',stop_time='${stopTime}' where dict='${main.dict}' and id=${item.id}`;
           console.log(childUpdateSql);
-          promisExec.push(exec(childUpdateSql));
+          promiseExec.push(exec(childUpdateSql));
         });
       }
 
@@ -147,7 +147,7 @@ const dictUpdate = (childAdd, childDel, childUpdate, main, userId) => {
           if (item.stop == "0") {
             childAddSql = `insert into tbl_sys_subdictionary (dict,dictchild,dictchildname,sort,stop,create_time,create_user,stop_time) values('${main.dict}','${item.dictchild}','${item.dictchildname}','${item.sort}','${item.stop}','${nowTime}','${userId}','${nowTime}')`;
           }
-          promisExec.push(exec(childAddSql));
+          promiseExec.push(exec(childAddSql));
         });
       }
 
@@ -156,9 +156,9 @@ const dictUpdate = (childAdd, childDel, childUpdate, main, userId) => {
         execLen += childDel.length;
         const childDelSql = `delete from tbl_sys_subdictionary where id in (${childDel})`;
         console.log(childDelSql);
-        promisExec.push(exec(childDelSql));
+        promiseExec.push(exec(childDelSql));
       }
-      let result = Promise.all(promisExec);
+      let result = Promise.all(promiseExec);
       return result.then((res) => {
         if (res && res.length === execLen) {
           return true;

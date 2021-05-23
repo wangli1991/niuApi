@@ -6,62 +6,71 @@
  */
 const express = require("express");
 const router = express.Router();
-const { login, getUserInfo } = require("../controller/user");
-const { creatToken, decodeToken } = require("../utils/token");
+const {
+  login,
+  getUserInfo,
+  wxLogin,
+  setReceiver,
+  getReceiver,
+} = require("../controller/user");
+const { creatToken } = require("../utils/token");
 const { SuccessModel, ErrorModel } = require("../model/resModel");
-// 登录接口
-router.post("/login", function (req, res, next) {
-  const { username, password } = req.body;
-  const result = login(username, password);
+// 微信登录接口
+router.post("/wxLogin", function (req, res, next) {
+  const { code } = req.body;
+  const result = wxLogin(code);
   return result.then((data) => {
-    if (data.code === 200) {
-      const userInfo = data.data;
-      const tokenPayload = { username: username, uid: userInfo.uid };
-      const token = creatToken(tokenPayload);
-      delete userInfo.password;
+    if (data) {
+      data = JSON.parse(data);
+      const token = creatToken(data);
+      req.session.jwt = token;
+      console.log(req.session);
+      getUserInfo(req);
       res.json(
         new SuccessModel({
           token: token,
-          userInfo: userInfo,
+          ...data,
         })
       );
     } else {
-      let errorMsg;
-      if (data.code === 404) {
-        errorMsg = "账户不存在";
-      } else {
-        errorMsg = "密码错误";
-      }
-      res.json(new ErrorModel([], errorMsg, data.code));
+      res.json(new ErrorModel([], "获取用户信息失败", data.code));
     }
   });
 });
-//获取用户信息
-router.get("/getUserInfo", function (req, res, next) {
-  const token = decodeToken(req);
-  if (token && token.username) {
-    const uid = token.uid;
-    const result = getUserInfo(uid);
-    return result.then((data) => {
-      if (data) {
-        let resData = data[0];
-        delete resData.password;
-        delete resData.uid;
-        res.json(
-          new SuccessModel({
-            data: resData,
-          })
-        );
-      } else {
-        res.json(new ErrorModel("用户不存在"));
-      }
-    });
-  } else {
-    res.json(new ErrorModel("用户信息解析失败"));
-  }
+
+//设置默认提货人信息
+router.post("/receiver/creat", function (req, res, next) {
+  const result = setReceiver(req.body);
+  return result.then((data) => {
+    if (data) {
+      res.json(new SuccessModel(data));
+    } else {
+      res.json(new ErrorModel(""));
+    }
+  });
 });
-//退出登录
-router.post("/logout", function (req, res, next) {
-  res.json(new SuccessModel("退出成功"));
+
+//获取默认提货人信息
+router.get("/receiver/info", function (req, res, next) {
+  const { userId } = req.query;
+  const result = getReceiver(userId);
+  return result.then((data) => {
+    if (data) {
+      res.json(new SuccessModel(data));
+    } else {
+      res.json(new ErrorModel(""));
+    }
+  });
+});
+
+router.post("/info", function (req, res, next) {
+  const result = getUserInfo(req.session.jwt);
+  return result.then((data) => {
+    if (data) {
+      res.json(new SuccessModel(data));
+    } else {
+      res.json(new ErrorModel(""));
+    }
+  });
 });
 module.exports = router;

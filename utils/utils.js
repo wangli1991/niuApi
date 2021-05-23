@@ -1,10 +1,10 @@
 /*
  * @Author: wangli
  * @Date: 2020-07-02 19:47:14
- * @LastEditors: 王利
- * @LastEditTime: 2020-10-30 19:43:04
+ * @LastEditors: WangLi
+ * @LastEditTime: 2021-05-13 09:53:52
  */
-
+const moment = require("moment");
 /**
  * 时间戳格式化函数
  * @param  {string} format    格式
@@ -57,4 +57,24 @@ function endUnix(date) {
     Date.parse(date.replace(/-/g, "/")) + 24 * 60 * 60 * 1000 - 1000
   );
 }
-module.exports = { formatTime, startUnix, endUnix };
+
+/**
+ * @description: 转化时间格式
+ * @param {*} date 时间
+ * @param {*} format 时间格式
+ * @return {*} 目标时间
+ */
+const transformDate = (date, format = "YYYY-MM-DD HH:mm:ss") => {
+  return moment(date).format(format);
+};
+
+/**
+ * @description:
+ * @param {*} date
+ * @param {*} format
+ * @return {*}
+ */
+const getPayDate = (date, format = "YYYY-MM-DD HH:mm:ss") => {
+  return moment().add(10, "m").format(format);
+};
+module.exports = { formatTime, startUnix, endUnix, transformDate, getPayDate };

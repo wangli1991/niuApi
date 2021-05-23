@@ -1,5 +1,0 @@
-[logger] 2020-12-06T13:24:14.725Z POST /user/login?_t=1607261054183 200 584 - 531.042 ms
-[logger] 2020-12-06T13:24:15.644Z GET /vue-element-admin/transaction/list?_t=1607261055351 404 173 - 2.518 ms
-[logger] 2020-12-06T13:24:21.284Z POST /user/logout?_t=1607261061278 200 56 - 1.148 ms
-[logger] 2020-12-06T13:43:04.640Z POST /user/login?_t=1607262184202 200 584 - 113.848 ms
-[logger] 2020-12-06T13:43:04.969Z GET /vue-element-admin/transaction/list?_t=1607262184780 404 173 - 3.474 ms
