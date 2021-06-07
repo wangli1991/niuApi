@@ -28,7 +28,7 @@ if (env === "dev") {
 // 线上环境
 if (env === "production") {
   MYSQL_CONF = {
-    host: "localhost",
+    host: "82.157.117.22",
     user: "root",
     password: "root",
     database: "daxuesheng",

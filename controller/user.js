@@ -4,10 +4,11 @@
  * @Last Modified by: wangli
  * @Last Modified time: 2020-07-10 14:48:35
  */
+const { appId, appSecret } = require("../config");
 const { exec } = require("../db/mysql");
 const request = require("request");
 const wxLogin = (code) => {
-  const url = `https://api.weixin.qq.com/sns/jscode2session?appid=wxa675b69b70b0d0de&secret=1934145a197a2f3b75b32e4adb1ec9c6&js_code=${code}&grant_type=authorization_code`;
+  const url = `https://api.weixin.qq.com/sns/jscode2session?appid=${appId}&secret=${appSecret}&js_code=${code}&grant_type=authorization_code`;
   return new Promise((resolve, reject) => {
     request(url, (error, response, body) => {
       if (!error && response.statusCode == 200) {
@@ -46,39 +47,37 @@ const register = (mobile, password, usertype) => {
     }
   });
 };
-const getUserInfo = (options) => {
+const getUserInfo = async (options) => {
   let sql = `select*from tbl_wx_users`;
-  return exec(sql).then((usersData) => {
-    if (usersData.length > 0) {
-      return options;
-    } else {
-      return false;
-    }
-  });
+  const res = await exec(sql);
+  if (res) {
+    return { list: res, count: res.length };
+  }
+  return false;
 };
 const setReceiver = async (params) => {
   const { orderUser, location, userId } = params;
   const receiver = await getReceiver(userId);
   let sql;
-  if (receiver) {
-    sql = `UPDATE tbl_receiver SET name='${orderUser.name}',phone='${orderUser.phone}' WHERE uid='${userId}'`;
-  } else {
+  if (JSON.stringify(receiver) === "{}") {
     sql = `INSERT INTO tbl_receiver (name,phone,uid) VALUES ('${orderUser.name}','${orderUser.phone}','${userId}')`;
+  } else {
+    sql = `UPDATE tbl_receiver SET name='${orderUser.name}',phone='${orderUser.phone}' WHERE uid='${userId}'`;
   }
-  return exec(sql).then((data) => {
-    return data ? true : false;
-  });
+  const res = await exec(sql);
+  return res ? true : false;
 };
-const getReceiver = (uid) => {
+const getReceiver = async (uid) => {
   const sql = `SELECT * FROM tbl_receiver WHERE uid='${uid}'`;
-  return exec(sql).then((data) => {
-    if (data.length > 0) {
-      const res = data[0];
-      delete res.uid;
-      return res;
-    } else {
-      return false;
+  const res = await exec(sql);
+  if (res) {
+    let data = {};
+    if (res.length) {
+      data = res[0];
+      delete data.uid;
     }
-  });
+    return data;
+  }
+  return false;
 };
 module.exports = { getUserInfo, wxLogin, setReceiver, getReceiver };

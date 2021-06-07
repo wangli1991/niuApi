@@ -5,15 +5,13 @@
  * @LastEditTime: 2021-04-12 16:24:47
  */
 const { exec } = require("../db/mysql");
-const getSortList = () => {
+const getSortList = async () => {
   const sql = `SELECT * FROM tbl_sort`;
-  return exec(sql).then((res) => {
-    if (res && res.length) {
-      return { dataList: res, count: res.length };
-    } else {
-      return false;
-    }
-  });
+  const res = await exec(sql);
+  if (res) {
+    return { list: res, count: res.length };
+  }
+  return false;
 };
 module.exports = {
   getSortList,

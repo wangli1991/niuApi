@@ -10,14 +10,8 @@ class BaseModel {
       this.msg = data;
       return;
     }
-    this.msg = null;
-    this.data = [];
-    if (data) {
-      this.data = data;
-    }
-    if (msg) {
-      this.msg = msg;
-    }
+    this.msg = msg || "";
+    this.data = data || null;
   }
 }
 class SuccessModel extends BaseModel {

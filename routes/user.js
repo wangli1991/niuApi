@@ -7,7 +7,6 @@
 const express = require("express");
 const router = express.Router();
 const {
-  login,
   getUserInfo,
   wxLogin,
   setReceiver,
@@ -24,12 +23,10 @@ router.post("/wxLogin", function (req, res, next) {
       data = JSON.parse(data);
       const token = creatToken(data);
       req.session.jwt = token;
-      console.log(req.session);
-      getUserInfo(req);
       res.json(
         new SuccessModel({
           token: token,
-          ...data,
+          openid: data.openid,
         })
       );
     } else {

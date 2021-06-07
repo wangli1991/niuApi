@@ -2,9 +2,9 @@
  * @Author: WangLi
  * @Date: 2021-04-17 09:05:15
  * @LastEditors: WangLi
- * @LastEditTime: 2021-04-17 09:07:47
+ * @LastEditTime: 2021-06-03 06:06:40
  */
 module.exports = {
-  appId: "wxa675b69b70b0d0de",
-  appSecret: "1934145a197a2f3b75b32e4adb1ec9c6",
+  appId: "wx83651bf12be9aa8d",
+  appSecret: "06c9442dcd14ecdcf9f61e3ee1798a9e",
 };

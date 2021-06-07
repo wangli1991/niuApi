@@ -2,7 +2,7 @@
  * @Author: 王利
  * @Date: 2020-07-02 19:47:13
  * @LastEditors: WangLi
- * @LastEditTime: 2021-05-16 14:43:11
+ * @LastEditTime: 2021-06-03 14:45:59
  */
 const createError = require("http-errors");
 const express = require("express");
@@ -36,6 +36,8 @@ const classifyRouter = require("./routes/classify");
 const productRouter = require("./routes/product");
 const cartRouter = require("./routes/cart");
 const orderRouter = require("./routes/order");
+const searchRouter = require("./routes/search");
+const activeRouter = require("./routes/active");
 
 // 创建Redis客户端
 const redisClient = require("./db/redis");
@@ -95,7 +97,7 @@ app.use(cookieParser());
 //缓存设置
 app.use("/temp/", express.static("./temp/"));
 // 对所有路由进行 jwt 认证
-// router.use(auth);
+app.use(auth);
 //routes handler
 app.use("/user", userRouter);
 app.use("/files_upload", filesUploadRouter);
@@ -105,17 +107,20 @@ app.use("/classify", classifyRouter);
 app.use("/product", productRouter);
 app.use("/cart", cartRouter);
 app.use("/order", orderRouter);
+app.use("/search", searchRouter);
+app.use("/active", activeRouter);
 
 // error handler
 app.use((err, req, res, next) => {
-  let errStatus;
-  console.log("错误名称:" + err.name);
+  let errStatus, msg;
   if (err.name === "UnauthorizedError" || err.name === "TokenExpiredError") {
     errStatus = 401;
+    msg = "token验证失败";
   } else {
     errStatus = err.status || 500;
+    mes = "服务器发生错误";
   }
-  res.status(errStatus).send({ code: errStatus });
+  res.status(errStatus).send({ code: errStatus, msg });
 });
 
 module.exports = app;
